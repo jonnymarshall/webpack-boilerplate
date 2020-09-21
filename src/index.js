@@ -1,15 +1,18 @@
-import _ from "lodash";
-import Print from "./print";
+import regeneratorRuntime from "regenerator-runtime";
+import { doPrint } from "./print";
+import "./style.css";
 
-function component() {
-  const element = document.createElement("div");
+doPrint();
 
-  // Lodash, currently included via a script, is required for this line to work
-  // Lodash, now imported by this script
-  element.innerHTML = _.join(["Hello", "webpack"], " ");
-  element.onclick = Print.bind(null, "Hello webpack!");
+const findNumber = async () => {
+  const a = Math.random(12);
+  const b = Math.random(12);
+  return a / b;
+};
 
-  return element;
-}
+const logNumber = async () => {
+  const result = await findNumber();
+  return result;
+};
 
-document.body.appendChild(component());
+console.log(logNumber());
