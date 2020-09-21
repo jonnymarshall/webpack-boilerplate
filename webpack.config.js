@@ -14,13 +14,42 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
     new HtmlWebpackPlugin({
-      title: "Output Management",
-      title: "Caching",
+      title: "Index",
+      template: "src/index.html",
     }),
   ],
   output: {
     filename: "[name].[contenthash].js",
     path: path.resolve(__dirname, "dist"),
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env"],
+          },
+        },
+      },
+      {
+        test: /\.(jpeg|jpg|gif|png)$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "images/[name].[ext]",
+            },
+          },
+        ],
+      },
+    ],
   },
   optimization: {
     moduleIds: "hashed",
