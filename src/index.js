@@ -1,6 +1,6 @@
 import regeneratorRuntime from "regenerator-runtime";
 import { doPrint } from "./print";
-import "./style.css";
+import "./style.scss";
 
 doPrint();
 
