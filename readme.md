@@ -13,10 +13,7 @@
 - Multiple pages (HTML)
 - Source file importing (jpeg|jpg|gif|png|svg)
 - Development server with hot reloading
-
-###### This is an <h6> tag
-
-## Getting started
+- Quick toggle css reset with normalize.css
 
 ### Clone repo
 

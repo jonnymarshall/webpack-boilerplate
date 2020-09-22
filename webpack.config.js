@@ -34,7 +34,7 @@ module.exports = {
           // "style-loader", // Injects styles into DOM
           "css-loader", // Turns css into commonjs
           {
-            loader: "postcss-loader",
+            loader: "postcss-loader", // Adds autoprefixing to css for cross-browser compatibility
             options: {
               postcssOptions: {
                 plugins: [
