@@ -1,11 +1,11 @@
 const path = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const generateHtmlPlugins = require("./generateHtmlPlugins.js");
+const generateHtmlPlugins = require("./webpack_config_helpers/generateHtmlPlugins.js");
 const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
-  mode: "development",
+  mode: "development", // Change to "production" for production bundle
   entry: {
     app: "./src/index.js",
   },
@@ -17,7 +17,7 @@ module.exports = {
     new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
     new MiniCssExtractPlugin(),
     // Initializes a new HtmlWebpackPlugin object for each HTML page in src/pages
-    ...generateHtmlPlugins.execute("./src/pages"),
+    ...generateHtmlPlugins.execute("../src/pages"),
   ],
   output: {
     filename: "[name].[contenthash].js",
@@ -33,6 +33,21 @@ module.exports = {
           },
           // "style-loader", // Injects styles into DOM
           "css-loader", // Turns css into commonjs
+          {
+            loader: "postcss-loader",
+            options: {
+              postcssOptions: {
+                plugins: [
+                  [
+                    "autoprefixer",
+                    {
+                      grid: true,
+                    },
+                  ],
+                ],
+              },
+            },
+          },
           "sass-loader", // Turns sass into css
         ],
       },
