@@ -1,6 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   mode: "development",
@@ -17,6 +18,7 @@ module.exports = {
       title: "Index",
       template: "src/index.html",
     }),
+    new MiniCssExtractPlugin(),
   ],
   output: {
     filename: "[name].[contenthash].js",
@@ -27,10 +29,13 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          "style-loader", // Injects styles into DOM
+          {
+            loader: MiniCssExtractPlugin.loader, // Extracts CSS into separate file(s)
+          },
+          // "style-loader", // Injects styles into DOM
           "css-loader", // Turns css into commonjs
-          "sass-loader",
-        ], // Turns sass into css
+          "sass-loader", // Turns sass into css
+        ],
       },
       {
         test: /\.js$/,
@@ -43,12 +48,16 @@ module.exports = {
         },
       },
       {
-        test: /\.(jpeg|jpg|gif|png)$/,
+        test: /\.(html)$/,
+        use: ["html-loader"],
+      },
+      {
+        test: /\.(jpeg|jpg|gif|png|svg)$/,
         use: [
           {
             loader: "file-loader",
             options: {
-              name: "images/[name].[ext]",
+              name: "[hash].[ext]",
             },
           },
         ],
