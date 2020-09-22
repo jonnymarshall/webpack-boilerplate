@@ -1,7 +1,7 @@
 const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const generateHtmlPlugins = require("./generateHtmlPlugins.js");
 
 module.exports = {
   mode: "development",
@@ -14,11 +14,9 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
-    new HtmlWebpackPlugin({
-      title: "Index",
-      template: "src/index.html",
-    }),
     new MiniCssExtractPlugin(),
+    // Initializes a new HtmlWebpackPlugin object for each HTML page in src/pages
+    ...generateHtmlPlugins.execute("./src/pages"),
   ],
   output: {
     filename: "[name].[contenthash].js",
@@ -48,6 +46,7 @@ module.exports = {
         },
       },
       {
+        // Import loadable attributes from src, srcset, href, data, xlink:href
         test: /\.(html)$/,
         use: ["html-loader"],
       },
